@@ -3,6 +3,7 @@ import { v4 as uuid_v4 } from 'uuid';
 
 import { Post } from './post.model';
 import { CreatePostDto } from './dto/create-post.dto';
+import { GetPostsFilteredDto } from './dto/get-posts-filtered.dto';
 
 @Injectable()
 export class PostsService {
@@ -10,6 +11,20 @@ export class PostsService {
 
   get_all_posts(): Post[] {
     return this.posts;
+  }
+
+  get_posts_with_filters(filter_dto: GetPostsFilteredDto): Post[] {
+    const { search } = filter_dto;
+
+    const posts_filtered = this.posts.filter((post) => {
+      if (post.title.includes(search) || post.description.includes(search)) {
+        return true;
+      }
+
+      return false;
+    });
+
+    return posts_filtered;
   }
 
   create_post(create_post_dto: CreatePostDto): Post {
