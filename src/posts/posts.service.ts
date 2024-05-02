@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { v4 as uuid_v4 } from 'uuid';
 
 import { Post } from './post.model';
@@ -43,6 +43,12 @@ export class PostsService {
   }
 
   get_post_by_id(id: string): Post {
+    const post = this.posts.find((post) => post.id === id);
+
+    if (!post) {
+      throw new NotFoundException();
+    }
+
     return this.posts.find((post) => post.id === id);
   }
 
