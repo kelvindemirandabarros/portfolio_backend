@@ -33,8 +33,7 @@ export class PostsService {
     const post: Post = {
       id: uuid_v4(),
       title: title,
-      description: description,
-      images_url: []
+      description: description
     };
 
     this.posts.push(post);
